@@ -4,6 +4,6 @@
  "version": "0.1.0",
  "command": "g++",
  "isShellCommand": true,
- "args": ["-g", "HelloWorld.c"],
+ "args": ["-g", "Rm101Control.c"],
  "showOutput": "always"
 }

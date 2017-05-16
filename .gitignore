@@ -1,4 +1,9 @@
 #VSCODE
+*.VSCODE
+
+#DEVC++
+*.layout
+*.dev
 
 # Prerequisites
 *.d
