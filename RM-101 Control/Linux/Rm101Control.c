@@ -80,7 +80,7 @@ Bool CloseGrabber(){
    return true;
 }
 
-Bool MoveSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWristPitch,int16_t aWristRoll)
+Bool MoveRoboterSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWristPitch,int16_t aWristRoll)
 {
    DBP("Versuche Gelenke zu rotieren: %d,%d,%d,%d,%d:\n", aWaist, aShoulder, aElbow, aWristPitch, aWristRoll);
    DBP("  Aktuelle Position: %d,%d,%d,%d,%d:\n",prv_ActualPosition.Waist, prv_ActualPosition.Shoulder, prv_ActualPosition.Elbow, prv_ActualPosition.WristPitch, prv_ActualPosition.WristRoll);
@@ -100,24 +100,24 @@ Bool MoveSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWrist
    return true;
 }
 
-Bool MoveToHomePosition (){
+Bool MoveRoboterHome(){
    DBNP("Versuche Roboter zurück in Home-Position zu bewegen.\n");
-   return MoveSteps(-prv_ActualPosition.Waist, -prv_ActualPosition.Shoulder, -prv_ActualPosition.Elbow, -prv_ActualPosition.WristPitch, -prv_ActualPosition.WristRoll) && CloseGrabber();
+   return MoveRoboterSteps(-prv_ActualPosition.Waist, -prv_ActualPosition.Shoulder, -prv_ActualPosition.Elbow, -prv_ActualPosition.WristPitch, -prv_ActualPosition.WristRoll) && CloseGrabber();
 }
 
-Bool MoveDegree(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWristPitch,int16_t aWristRoll)
+Bool MoveRoboterDegree(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWristPitch,int16_t aWristRoll)
 {
    DBP("Versuche Gelenke zu rotieren: %d,%d,%d,%d,%d: Rechne um in Steps...\n", aWaist, aShoulder, aElbow, aWristPitch, aWristRoll);
-   return MoveSteps(25 * aWaist, 25 * aShoulder, 25 * aElbow, (int16_t)(19.44 * aWristPitch), 20 * aWristRoll);   
+   return MoveRoboterSteps(25 * aWaist, 25 * aShoulder, 25 * aElbow, (int16_t)(19.44 * aWristPitch), 20 * aWristRoll);   
 }
 
 int main () {
    OpenPort("/dev/ttyUSB0");
-   MoveSteps(300,400,500,600,700);
-   MoveSteps(-200,400,-300,-200,-340);
-   MoveDegree(15,16,17,18,19);
+   MoveRoboterSteps(300,400,500,600,700);
+   MoveRoboterSteps(-200,400,-300,-200,-340);
+   MoveRoboterDegree(15,16,17,18,19);
    OpenGrabber();
-   MoveToHomePosition();
+   MoveRoboterHome();
    ClosePort();
 return 0;
 }
