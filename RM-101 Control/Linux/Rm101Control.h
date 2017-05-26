@@ -5,7 +5,7 @@
 
 typedef enum {e_Grabber_close = 0, e_Grabber_open = 1} e_Grabber;
 
-typedef enum {e_Joint_Waist, e_joint_Shoulder, e_joint_Elbow, e_joint_WristPitch, e_joint_WristRoll} e_Joint;
+typedef enum {e_joint_Waist, e_joint_Shoulder, e_joint_Elbow, e_joint_WristPitch, e_joint_WristRoll} e_Joint;
 
 typedef struct {
    int16_t Waist;
@@ -25,9 +25,10 @@ typedef struct {
 #define WRISTPITCH_LOW -1250 //Gegenläufig daher ein Gelenk Positiv eins negativ (erstes hier negativ)
 #define WRISTPITCH_HIGH 1750
 
-#define WAIST_STEPSPERDEGREE 25
-#define SHOULDER_STEPSPERDEGREE 25
-#define ELBOW_STEPSPERDEGREE 25
-#define WRIST_STEPSPERDEGREE 20
+#define WAIST_STEPSPERDEGREE 25.0
+#define SHOULDER_STEPSPERDEGREE 25.0
+#define ELBOW_STEPSPERDEGREE 25.0
+#define WRISTPITCH_STEPSPERDEGREE 19.44
+#define WRISTROLL_STEPSPERDEGREE 20.0
 
 #endif /* RM101CONTROL_H */

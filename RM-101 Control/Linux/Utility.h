@@ -31,7 +31,7 @@ typedef enum {false = 0, true = 1} Bool;
 #define ERROR_WAISTED 4 //Unmögliche Rotation um Hüft-Gelenk
 #define ERROR_SHOULDERED 5 //Unmögliche Rotation um Schulter-Gelenk
 #define ERROR_ELBOWED 6 // Unmögliche Rotation um Ellbogen-Gelenk
-#define ERROR_WRISTED 7 //Unmögliche Rotation um Hand-Gelenk
+#define ERROR_WRISTED 7 //Unmögliche Rotation um Hand-Gelenk (Wrist-Roll)
 
 Bool setError(u_int8_t aError);
 u_int8_t getError(void);
