@@ -160,6 +160,10 @@ return MoveRoboterAlignedDegree(Steps2Degree(aWaist, e_joint_Waist),
                                  Steps2Degree(aWristRoll, e_joint_WristRoll));
 }
 
+Bool AlignGrabber(){
+   return MoveRoboterAlignedDegree(0,0,0,0);
+}
+
 Bool MoveRoboterHome(){
    DBNP("Versuche Roboter zurück in Home-Position zu bewegen.\n");
    return MoveRoboterSteps(-prv_ActualPosition.Waist, -prv_ActualPosition.Shoulder, -prv_ActualPosition.Elbow, -prv_ActualPosition.WristPitch, -prv_ActualPosition.WristRoll) && CloseGrabber();

@@ -31,4 +31,18 @@ typedef struct {
 #define WRISTPITCH_STEPSPERDEGREE 19.44
 #define WRISTROLL_STEPSPERDEGREE 20.0
 
+
+RobotPosition getPositions();
+Bool CheckRobotMovement(int16_t aValue, e_Joint aJoint);
+Bool OpenGrabber();
+Bool CloseGrabber();
+int16_t Degree2Steps(double_t aDegree, e_Joint aJoint);
+double_t Steps2Degree (int16_t aSteps,e_Joint aJoint);
+Bool MoveRoboterSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWristPitch,int16_t aWristRoll);
+Bool MoveRoboterDegree(double_t aWaist, double_t aShoulder, double_t aElbow, double_t aWristPitch, double_t aWristRoll);
+Bool MoveRoboterAlignedDegree(double_t aWaist, double_t aShoulder, double_t aElbow, double_t aWristRoll);
+Bool MoveRoboterAlignedSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow,int16_t aWristRoll);
+Bool AlignGrabber();
+Bool MoveRoboterHome();
+
 #endif /* RM101CONTROL_H */
