@@ -15,7 +15,7 @@ Bool OpenPort(char* aPort) {
 }
 
 Bool SendCmd(char* aCmd){
-   DBP("  Sende Zeichenfolge \"%s\":\n", aCmd);
+   DBP("  Sende Zeichenfolge: %s", aCmd);
    
    if (prv_FileHandle == NULL){
       DBNP("  Fehlgeschlagen, Port geschlossen!\n");
@@ -26,6 +26,7 @@ Bool SendCmd(char* aCmd){
       DBP("  Fehlgeschlagen, keine oder wenige Bytes gesendet, Errno: %d\n", errno);  
       return setError(ERROR_SENDINGDATA);
    }
+   fflush(prv_FileHandle);
    DBNP("  Erfolgreich.\n");
    return true;
 }

@@ -1,6 +1,7 @@
 #include "Rm101Control.h"
 #include "FileHandle.h"
 #include <string.h>
+#include <unistd.h>
 #include <math.h>
 
 static RobotPosition prv_ActualPosition = {0,0,0,0,0,e_Grabber_close};
@@ -71,7 +72,7 @@ Bool CheckRobotMovement(int16_t aValue, e_Joint aJoint)
 
 Bool OpenGrabber(){
    DBNP("Öffne Greifer:...\n");
-   if (!SendCmd("F"))
+   if (!SendCmd("F\n"))
       return false;
    OpenOrCloseGrabber(e_Grabber_open);
    return true;
@@ -79,7 +80,7 @@ Bool OpenGrabber(){
 
 Bool CloseGrabber(){
    DBNP("Schließe Greifer:...\n");
-   if (!SendCmd("C"))
+   if (!SendCmd("C\n"))
       return false;
    OpenOrCloseGrabber(e_Grabber_close);
    return true;
@@ -126,7 +127,7 @@ Bool MoveRoboterSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t
    if(aWristPitch && !CheckRobotMovement(aWristPitch, e_joint_WristPitch))
       return setError(ERROR_WRISTED);
    char lcl_Cmd[25] = {0};
-   sprintf(lcl_Cmd,"I%d,%d,%d,%d,%d,0",aWaist,aShoulder,aElbow,aWristPitch + aWristRoll, -aWristPitch + aWristRoll);
+   sprintf(lcl_Cmd,"I%d,%d,%d,%d,%d,0\n",aWaist,aShoulder,aElbow,-aWristPitch + aWristRoll, aWristPitch + aWristRoll);
    if (!SendCmd(lcl_Cmd))
       return false;
    AddPositions(aWaist, aShoulder, aElbow, aWristPitch, aWristRoll);
@@ -148,8 +149,10 @@ Bool MoveRoboterAlignedDegree(double_t aWaist, double_t aShoulder, double_t aElb
 {
    DBP("Versuche Gelenke zu rotieren und Greifer parallel zum Boden auszurichten:  %.2f°,%.2f°,%.2f°,%.2f°\n", aWaist, aShoulder, aElbow, aWristRoll);
    double_t lcl_WristMoovement = -(aShoulder + aElbow + Steps2Degree(prv_ActualPosition.Elbow, e_joint_Elbow) 
-                                 + Steps2Degree(prv_ActualPosition.Shoulder, e_joint_Shoulder))
-                                 - Steps2Degree(prv_ActualPosition.WristPitch, e_joint_WristPitch);
+                                 + Steps2Degree(prv_ActualPosition.Shoulder, e_joint_Shoulder)
+                                 + Steps2Degree(prv_ActualPosition.WristPitch, e_joint_WristPitch));
+   DBP("----%f----",Steps2Degree(prv_ActualPosition.Elbow, e_joint_Elbow) 
+                                 + Steps2Degree(prv_ActualPosition.Shoulder, e_joint_Shoulder));
    return MoveRoboterDegree(aWaist, aShoulder, aElbow, lcl_WristMoovement, aWristRoll);  
 }
 
@@ -170,12 +173,12 @@ Bool MoveRoboterHome(){
 }
 
 int main () {
-   OpenPort("/dev/ttyUSB0");
-   MoveRoboterSteps(300,400,500,600,700);
-   MoveRoboterAlignedDegree(15.0, -4.0, -7.0, 0);
-   MoveRoboterDegree(15.0, 14.0, 11.0, 5.0, 0);
-   MoveRoboterAlignedSteps(15, 14, 11, 30);
+   OpenPort("/dev/usb/lp3");
+   MoveRoboterSteps(200,300,400,500,0);  
+   MoveRoboterAlignedDegree(15.0, 14.0, -6.0, 0);
+   MoveRoboterAlignedSteps(-250, -300, -200, 0);
    OpenGrabber();
+   getc(stdin);
    MoveRoboterHome();
    ClosePort();
    return 0;
