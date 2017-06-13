@@ -45,5 +45,6 @@ Bool MoveRoboterAlignedDegree(double_t aWaist, double_t aShoulder, double_t aElb
 Bool MoveRoboterAlignedSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow,int16_t aWristRoll);
 Bool AlignGrabber();
 Bool MoveRoboterHome();
-
+Bool OpenPort(char* aPort);
+Bool ClosePort(void); 
 #endif /* RM101CONTROL_H */

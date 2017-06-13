@@ -151,8 +151,6 @@ Bool MoveRoboterAlignedDegree(double_t aWaist, double_t aShoulder, double_t aElb
    double_t lcl_WristMoovement = -(aShoulder + aElbow + Steps2Degree(prv_ActualPosition.Elbow, e_joint_Elbow) 
                                  + Steps2Degree(prv_ActualPosition.Shoulder, e_joint_Shoulder)
                                  + Steps2Degree(prv_ActualPosition.WristPitch, e_joint_WristPitch));
-   DBP("----%f----",Steps2Degree(prv_ActualPosition.Elbow, e_joint_Elbow) 
-                                 + Steps2Degree(prv_ActualPosition.Shoulder, e_joint_Shoulder));
    return MoveRoboterDegree(aWaist, aShoulder, aElbow, lcl_WristMoovement, aWristRoll);  
 }
 
@@ -170,16 +168,4 @@ Bool AlignGrabber(){
 Bool MoveRoboterHome(){
    DBNP("Versuche Roboter zurück in Home-Position zu bewegen.\n");
    return MoveRoboterSteps(-prv_ActualPosition.Waist, -prv_ActualPosition.Shoulder, -prv_ActualPosition.Elbow, -prv_ActualPosition.WristPitch, -prv_ActualPosition.WristRoll) && CloseGrabber();
-}
-
-int main () {
-   OpenPort("/dev/usb/lp3");
-   MoveRoboterSteps(200,300,400,500,0);  
-   MoveRoboterAlignedDegree(15.0, 14.0, -6.0, 0);
-   MoveRoboterAlignedSteps(-250, -300, -200, 0);
-   OpenGrabber();
-   getc(stdin);
-   MoveRoboterHome();
-   ClosePort();
-   return 0;
 }
