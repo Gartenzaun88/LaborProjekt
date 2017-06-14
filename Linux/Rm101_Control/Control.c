@@ -1,12 +1,10 @@
-#include "Rm101Control.h"
+#include "Control.h"
 #include "FileHandle.h"
-#include "Utility.h"
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
 
 static RobotPosition prv_ActualPosition = {0,0,0,0,0,e_Grabber_close};
-extern Bool SendCmd(char* aCmd);
 
 RobotPosition getPositions(){
    return prv_ActualPosition;

@@ -5,5 +5,6 @@
 
 Bool OpenPort(char* aPort);
 Bool ClosePort(void);
+Bool SendCmd(char* aCmd);
 
 #endif /* FILEHANDLE_H */

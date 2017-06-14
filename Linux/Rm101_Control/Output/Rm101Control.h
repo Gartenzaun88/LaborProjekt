@@ -1,8 +1,9 @@
 #ifndef RM101CONTROL_H
 #define RM101CONTROL_H
 
-#include "Utility.h"
+#include <sys/types.h>
 #include <math.h>
+typedef enum{false = 0, true =1} Bool;
 
 typedef enum {e_Grabber_close = 0, e_Grabber_open = 1} e_Grabber;
 
@@ -25,13 +26,6 @@ typedef struct {
 #define ELBOW_HIGH 500
 #define WRISTPITCH_LOW -1750 //Gegenläufig daher ein Gelenk Positiv eins negativ (erstes hier negativ) Arm zeit nach oben
 #define WRISTPITCH_HIGH 1250
-
-#define WAIST_STEPSPERDEGREE 25.0
-#define SHOULDER_STEPSPERDEGREE 25.0
-#define ELBOW_STEPSPERDEGREE 12.5
-#define WRISTPITCH_STEPSPERDEGREE 19.44
-#define WRISTROLL_STEPSPERDEGREE 20.0
-
 
 RobotPosition getPositions();
 Bool CheckRobotMovement(int16_t aValue, e_Joint aJoint);

@@ -1,5 +1,5 @@
 //Lib bauen
-gcc -c Rm101Control.c FileHandle.c Utility.c -Wall -Wextra -pedantic -DDEBUG
+gcc -c Control.c FileHandle.c Utility.c -Wall -Wextra -pedantic -DDEBUG
 ar rs Output/libRm101Control.a FileHandle.o Rm101Control.o Utility.o
 
 //Main bauen

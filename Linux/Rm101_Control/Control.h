@@ -1,12 +1,8 @@
-#ifndef RM101CONTROL_H
-#define RM101CONTROL_H
+#ifndef CONTROL_H
+#define CONTROL_H
 
-#include <sys/types.h>
+#include "Utility.h"
 #include <math.h>
-
-#define Bool int16_t
-#define true 1
-#define false 0
 
 typedef enum {e_Grabber_close = 0, e_Grabber_open = 1} e_Grabber;
 
@@ -51,4 +47,4 @@ Bool AlignGrabber();
 Bool MoveRoboterHome();
 Bool OpenPort(char* aPort);
 Bool ClosePort(void); 
-#endif /* RM101CONTROL_H */
+#endif /* CONTROL_H */
