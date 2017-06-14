@@ -1,6 +1,5 @@
 #ifndef UTILITY_H
 #define UTILITY_H
-
 #include <sys/types.h>
 #include <stdio.h>
 #include <errno.h>
@@ -22,7 +21,9 @@
       if (DEBUG_TEST) fprintf(stderr, fmt); \
    } while (0)
 
-typedef enum {false = 0, true = 1} Bool;
+#define Bool int16_t
+#define true 1
+#define false 0
 
 //Fehlercodes für Systemfehler siehe SystemVariable errno(Linux) oder getlasterror(Windows)
 #define ERROR_COULDNOTTOPENPORT 1 //Port konnte nicht geöffnet werden

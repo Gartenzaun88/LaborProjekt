@@ -1,5 +1,6 @@
 #include "Rm101Control.h"
 #include "FileHandle.h"
+#include "Utility.h"
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
