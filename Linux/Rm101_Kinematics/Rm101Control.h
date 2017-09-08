@@ -41,17 +41,4 @@ Bool AlignGrabber();
 Bool MoveRoboterHome();
 Bool OpenPort(char* aPort);
 Bool ClosePort(void); 
-
-//Gibt den integer-Wert des letzten Fehlers zurück
-u_int8_t getError(void);
-
-//Fehlercodes für Systemfehler siehe SystemVariable errno(Linux) oder getlasterror(Windows)
-#define ERROR_COULDNOTTOPENPORT 1 //Port konnte nicht geöffnet werden
-#define ERROR_INVALIDPORTHANDLE 2 //Ungültiger/nicht existierender Port
-#define ERROR_SENDINGDATA 3 //Keine oder nicht alle Daten konnten gesendet werden
-#define ERROR_WAISTED 4 //Unmögliche Rotation um Hüft-Gelenk
-#define ERROR_SHOULDERED 5 //Unmögliche Rotation um Schulter-Gelenk
-#define ERROR_ELBOWED 6 // Unmögliche Rotation um Ellbogen-Gelenk
-#define ERROR_WRISTED 7 //Unmögliche Rotation um Hand-Gelenk (Wrist-Roll)
-
 #endif /* RM101CONTROL_H */
