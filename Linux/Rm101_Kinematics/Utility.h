@@ -23,11 +23,14 @@
 
 #define WAIST_LENGTH 160 //in mm
 #define SHOULDER_LENGTH 200 //in mm
-#define ELLBOW_LENGTH 150 //in mm
+#define Elbow_LENGTH 150 //in mm
 #define WRIST_LENGTH 88 //in mm
 
 #define WAIST_LENGTH2 (WAIST_LENGTH * WAIST_LENGTH) //in mm
 #define SHOULDER_LENGTH2 (SHOULDER_LENGTH * SHOULDER_LENGTH) //in mm
-#define ELLBOW_LENGTH2 (ELLBOW_LENGTH * ELLBOW_LENGTH) //in mm
+#define Elbow_LENGTH2 (Elbow_LENGTH * Elbow_LENGTH) //in mm
 #define WRIST_LENGTH2 (WRIST_LENGTH * WRIST_LENGTH) //in mm
+
+#define SHOULDER_HOMEPOS 1125
+#define ELBOW_HOMEPOS 900
 #endif /* UTILITY_H */
