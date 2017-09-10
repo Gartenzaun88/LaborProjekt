@@ -63,7 +63,7 @@ Bool ParseError(int16_t aSendError){
 
 void calcShoulderElbowWristSteps(double_t aShoulderAngle, double_t aElbowAngle, double_t aWristAngle,
                                  int16_t* aShoulderStepsToDo,int16_t* aElbowStepsToDo,int16_t* aWristStepsToDo){
-   DBNP("-----Berechne nötige Steps von Homeposition\n");
+   DBNP("-----Berechne nötige Steps von Homeposition (Ellbogen, Schulter,Handgelenk)\n");
    int16_t lcl_ShoulderStepsFromHome = Degree2Steps(aShoulderAngle, e_joint_Shoulder) - SHOULDER_HOMEPOS;
    int16_t lcl_ElbowStepsFromHome = Degree2Steps(aElbowAngle, e_joint_Elbow) - ELBOW_HOMEPOS;
    DBP("-----Neues Positionstupel (Relativ zu Homeposition): %d(%d);%d(%d);%d\n",
@@ -83,19 +83,16 @@ void calcPositionVector(int16_t* X, int16_t* Z, double_t aWristPitch){
    *X = *X - lcl_DeltaX;
 }
 
-
-//X-Achse zeigt in Richtung Home position
-//Z-Achse Richtung der Hüfte nach oben
-//Y-achse bildet Vektorprodukt, so dass Rechtssystem entsteht
-Bool MoveRoboterXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch, double_t aWristRoll) {
+Bool CalcStepsforNewPosition(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch, double_t aWristRoll,
+   RobotPositionPtr aStepTuple1, RobotPositionPtr aStepTuple2){
    prv_RobotPosition = getPositions();
    DBP("-----Zielkoordinaten: [%d, %d, %d], Greiferwinkel zur Horizotalen: %.2f° \n\n",X,Y,Z,aWristPitch); 
    //Hüfte
-   int16_t lcl_WaistStepsToDo;
    int16_t lcl_NewWaistPosition;
    lcl_NewWaistPosition = CalcWaistRotation(X,Y);
-   lcl_WaistStepsToDo = lcl_NewWaistPosition - prv_RobotPosition.Waist;
-   DBP("-----Aktuelle Hüftposition: %d, Benötigte Bewegung: %d\n\n",prv_RobotPosition.Waist,lcl_WaistStepsToDo);
+   aStepTuple1->Waist = lcl_NewWaistPosition - prv_RobotPosition.Waist;
+   aStepTuple2->Waist = lcl_NewWaistPosition - prv_RobotPosition.Waist;
+   DBP("-----Aktuelle Hüftposition: %d, Benötigte Bewegung: %d\n\n",prv_RobotPosition.Waist,aStepTuple1->Waist);
 
    //Berechne Roboter Koordinaten X und Z
    int16_t lcl_X = (int) sqrt(X*X+Y*Y);
@@ -122,39 +119,83 @@ Bool MoveRoboterXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch, doubl
    DBP("-----Berechne Winkeltupel (Schulter, Ellbogen, Handgelenk): [%.2f°,%.2f°,%.2f°] und [%.2f°,%.2f°,%.2f°]\n\n",
          lcl_NewShoulderPositionAngle1, lcl_NewElbowPositionAngle1, lcl_NewWristPositionAngle1,
          lcl_NewShoulderPositionAngle2, lcl_NewElbowPositionAngle2, lcl_NewWristPositionAngle2);
-   
-   int16_t lcl_ElbowStepsToDo;
-   int16_t lcl_ShoulderStepsToDo;
-   int16_t lcl_WristStepsToDo;
+
    DBNP("-----Berechne benötigte Steps für erstes Tupel\n");
    calcShoulderElbowWristSteps(lcl_NewShoulderPositionAngle1, lcl_NewElbowPositionAngle1, lcl_NewWristPositionAngle1,
-                              &lcl_ShoulderStepsToDo, &lcl_ElbowStepsToDo, &lcl_WristStepsToDo);
-   DBNP("-----Sende Gelenkausrichtung an Roboter\n");
-   if (!MoveRoboterSteps(lcl_WaistStepsToDo, lcl_ShoulderStepsToDo, lcl_ElbowStepsToDo,
-                           lcl_WristStepsToDo, Degree2Steps(aWristRoll, e_joint_WristRoll))){
-      if (ParseError(getError())){
-         DBNP("-----Berechne Steps für zweites Gelenktupel\n");
-         calcShoulderElbowWristSteps(lcl_NewShoulderPositionAngle2, lcl_NewElbowPositionAngle2, lcl_NewWristPositionAngle2,
-            &lcl_ShoulderStepsToDo, &lcl_ElbowStepsToDo, &lcl_WristStepsToDo);     
-            if (MoveRoboterSteps(lcl_WaistStepsToDo, lcl_ShoulderStepsToDo, lcl_ElbowStepsToDo,
-               lcl_WristStepsToDo, Degree2Steps(aWristRoll, e_joint_WristRoll))){
-               DBNP("-----Bewegung Erfolgreich-----");
-               return true;
-            } else {
-               ParseError(getError());
-               DBNP("-----Bewegung fehlgeschlagen-----");
-               return false;
-            }   
-      } else {
-         DBNP("-----Bewegung fehlgeschlagen-----");
-         return false;
-      }
+                              &(aStepTuple1->Shoulder), &(aStepTuple1->Elbow), &(aStepTuple1->WristPitch));
+   DBNP("-----Berechne benötigte Steps für zweites Tupel\n");
+   calcShoulderElbowWristSteps(lcl_NewShoulderPositionAngle2, lcl_NewElbowPositionAngle2, lcl_NewWristPositionAngle2,
+                              &(aStepTuple2->Shoulder), &(aStepTuple2->Elbow), &(aStepTuple2->WristPitch));
+   aStepTuple1->WristRoll = Degree2Steps(aWristRoll, e_joint_WristRoll);
+   aStepTuple2->WristRoll = Degree2Steps(aWristRoll, e_joint_WristRoll);   
+   return true;
+}
+
+Bool CheckRobotMovementAll(RobotPosition aRobotPosition){
+   if (!CheckRobotMovement(aRobotPosition.Waist, e_joint_Waist))
+      return false;
+   if (!CheckRobotMovement(aRobotPosition.Shoulder, e_joint_Shoulder))
+      return false;
+   if (!CheckRobotMovement(aRobotPosition.Elbow, e_joint_Elbow))
+      return false;
+   if (!CheckRobotMovement(aRobotPosition.WristPitch, e_joint_WristPitch))
+      return false;
+   return true;
+}
+
+//X-Achse zeigt in Richtung Home position
+//Z-Achse Richtung der Hüfte nach oben
+//Y-achse bildet Vektorprodukt, so dass Rechtssystem entsteht
+Bool MoveRoboterXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch, double_t aWristRoll) {
+   RobotPosition lcl_StepTuple1, lcl_StepTuple2;
+
+   if (!CalcStepsforNewPosition(X, Y, Z, aWristPitch, aWristRoll, &lcl_StepTuple1, &lcl_StepTuple2))
+      return false;
+   DBNP("-----Sende erstes Gelenktupel an den Roboter\n");
+   if (MoveRoboterSteps(lcl_StepTuple1.Waist, lcl_StepTuple1.Shoulder, lcl_StepTuple1.Elbow,
+      lcl_StepTuple1.WristPitch, lcl_StepTuple1.WristRoll)){
+      DBNP("-----Bewegung Erfolgreich-----");  
+      return true;   
    }
-   DBNP("-----Bewegung Erfolgreich-----");  
-   return true;       
+   if (!ParseError(getError())){
+      DBNP("-----Bewegung fehlgeschlagen-----");
+      return false;
+   }
+   DBNP("-----Erstes Gelenktupel gescheitert, Versuche zweites Gelenktupel\n");
+   if (MoveRoboterSteps(lcl_StepTuple2.Waist, lcl_StepTuple2.Shoulder, lcl_StepTuple2.Elbow,
+      lcl_StepTuple2.WristPitch, lcl_StepTuple2.WristRoll)){
+      DBNP("-----Bewegung Erfolgreich-----");
+      return true;
+   } else {
+      ParseError(getError());
+      DBNP("-----Bewegung fehlgeschlagen-----");
+      return false;
+   }
+}
+
+Bool ValidateXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch) {
+   RobotPosition lcl_StepTuple1, lcl_StepTuple2;
+
+   if (!CalcStepsforNewPosition(X, Y, Z, aWristPitch, 0, &lcl_StepTuple1, &lcl_StepTuple2))
+      return false;
+   DBNP("-----Kontrolliere Positionen der Gelenke für das erste Tupel\n");   
+   Bool lcl_TestTuple1 = CheckRobotMovementAll(lcl_StepTuple1); 
+   DBNP("-----Kontrolliere Positionen der Gelenke für das erste Tupel\n");   
+   Bool lcl_TestTuple2 = CheckRobotMovementAll(lcl_StepTuple2); 
+   if (lcl_TestTuple1 || lcl_TestTuple2){
+      DBNP("-----Koordinate durch mindestens ein Gelenktupel erreichbar");
+      return true;
+   }
+   DBNP("-----Koordinate nicht erreichbar");
+   return false;
 }
 
 int main (){
-   MoveRoboterXYZ(439,0,160,0.0,0.0);
+   MoveRoboterXYZ(437,0,160,0.0,0.0);
+   if(ValidateXYZ(335,200,200,0.0))
+      DBNP("\nWUHU\n");
+   if(ValidateXYZ(200,-300,360,-10.0))
+      DBNP("\nWUHU\n");
+
    printf("\n\n");
 }
