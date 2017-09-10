@@ -1,11 +1,19 @@
 //Rm101Control bauen
-gcc -c Control.c FileHandle.c Utility.c -Wall -Wextra -pedantic -DDEBUG
+gcc -c Control.c FileHandle.c Utility.c -Wall -Wextra -pedantic
 ar rs Output/libRm101Control.a FileHandle.o Rm101Control.o Utility.o
-
-//Controlltest bauen
-gcc -o Controlltest.out Main.c -Llib -lRm101Control -Wall -Wextra -pedantic
+//Mit Debug
+gcc -c Control.c FileHandle.c Utility.c -Wall -Wextra -pedantic -DDEBUG
+ar rs Debug/libRm101Control.a FileHandle.o Rm101Control.o Utility.o
 
 //Rm101Kinematics bauen
-gcc -c Rm101Kinematics.c -Llib -lRm101Control -lm -Wall -Wextra -pedantic -DDEBUG
+gcc -c Rm101Kinematics.c -lm -Wall -Wextra -pedantic
 ar rs Output/libRm101Kinematics.a Rm101Kinematics.o
+//Mit Debug
+gcc -c Rm101Kinematics.c -lm -Wall -Wextra -pedantic -DDEBUG
+ar rs Debug/libRm101Kinematics.a Rm101Kinematics.o
 
+
+//reachtest bauen
+gcc -o Reachtest.out Main.c -Llib -lRm101Kinematics -lm -lRm101Control -Wall -Wextra -pedantic
+//Controlltest bauen
+gcc -o Controlltest.out Main.c -Llib -lRm101Control -Wall -Wextra -pedantic

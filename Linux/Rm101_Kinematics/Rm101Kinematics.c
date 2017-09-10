@@ -32,6 +32,10 @@ Bool calcShoulderAndElbowRotation(int16_t X, int16_t Z, double_t* aShoulder1, do
       DBP("-----Positionsvektorlänge %d ist größer als Roboterreichweite %d\n", lcl_PositionVectorAbsolute, Elbow_LENGTH + SHOULDER_LENGTH);
       return false;
    }
+   if (X == 0){
+      DBNP("-----X darf nicht 0 sein, sonst Division durch 0.\n");
+      return false;
+   }
    DBNP("-----Berechne Winkeltupel für Schulter zum Ellbogen\n");
    DBNP("-----Schulterwinkel = 180° ± ζ   |   Ellbogenwinkel = α ± β\n");
    double_t lcl_Alpha = atan2((double)Z,(double)X) * 180/M_PI;
@@ -183,19 +187,9 @@ Bool ValidateXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch) {
    DBNP("-----Kontrolliere Positionen der Gelenke für das erste Tupel\n");   
    Bool lcl_TestTuple2 = CheckRobotMovementAll(lcl_StepTuple2); 
    if (lcl_TestTuple1 || lcl_TestTuple2){
-      DBNP("-----Koordinate durch mindestens ein Gelenktupel erreichbar");
+      DBNP("-----Koordinate durch mindestens ein Gelenktupel erreichbar\n");
       return true;
    }
-   DBNP("-----Koordinate nicht erreichbar");
+   DBNP("-----Koordinate nicht erreichbar\n\n");
    return false;
-}
-
-int main (){
-   MoveRoboterXYZ(437,0,160,0.0,0.0);
-   if(ValidateXYZ(335,200,200,0.0))
-      DBNP("\nWUHU\n");
-   if(ValidateXYZ(200,-300,360,-10.0))
-      DBNP("\nWUHU\n");
-
-   printf("\n\n");
 }
