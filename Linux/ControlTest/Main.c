@@ -13,7 +13,6 @@ int random_number(int min, int max)
 }
 
 int main (){
-   //if(OpenPort("/dev/usb/lp3"))
    CheckRobotMovement(30000, e_joint_Elbow);
    if(OpenPort("/dev/usb/lp3"))  
    {
