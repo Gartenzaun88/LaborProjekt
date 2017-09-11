@@ -1,9 +1,0 @@
-set xrange[-225:450]
-set yrange[-440:450]
-set zrange[0:600]
-set xlabel 'X'
-set ylabel 'Y'
-set zlabel 'Z'
-set palette rgb 33,13,10
-set xyplane at 0
-
