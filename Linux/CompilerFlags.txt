@@ -14,16 +14,16 @@ ar rs Debug/libRm101Kinematics.a Rm101Kinematics.o
 
 
 //CalculateReach bauen
-gcc -o Reachtest.out CalculateReach.c -Llib -lRm101Kinematics -lm -lRm101Control -Wall -Wextra -pedantic
+gcc -o Reachtest.out CalculateReach.c -Llib -lRm101Kinematics -lRm101Control -lm -Wall -Wextra -pedantic
 
 //MoveRandom bauen
 gcc -o MoveRandom.out Main.c -Llib -lRm101Control -Wall -Wextra -pedantic
 
 //MoveXYZ bauen
-gcc -o MoveXYZ.out MoveXYZ.c -Llib -lRm101Control -lRm101Kinematics -lm -Wall -Wextra -pedantic
+gcc -o MoveXYZ.out MoveXYZ.c -Llib -lRm101Kinematics -lRm101Control -lm -Wall -Wextra -pedantic
 
 //PickUpObject bauen
-gcc -o PickUpObject.out PickUpObject.c -Llib -lRm101Control -lRm101Kinematics -lm -Wall -Wextra -pedantic
+gcc -o PickUpObject.out PickUpObject.c -Llib -lRm101Kinematics -lRm101Control -lm -lm -Wall -Wextra -pedantic
 
 //Gnuplots anzeigen
-gnuplot GnuPlotFull.gplt oder gnuplot GnuPlot.gplt
+gnuplot GnuPlotFull.gplt oder gnuplot GnuPlotPartialX.gplt oder gnuplot GnuPlotPartialY.gplt oder gnuplot GnuPlotPartialZ.gplt
