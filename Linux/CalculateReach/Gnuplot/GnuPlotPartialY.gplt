@@ -1,0 +1,15 @@
+set xrange[-225:450]
+set yrange[-440:450]
+set zrange[-100:600]
+set xlabel 'X'
+set ylabel 'Y'
+set zlabel 'Z'
+set palette rgb 33,13,10
+set xyplane at 0    
+set arrow 1 to 0,0,160 ls 1 lw 5 front 
+set arrow 2 from 0,0,160 to 141,0,301 ls 1 lw 5 front 
+set arrow 3 from 141,0,301 to 291,0,301 ls 1 lw 5 front 
+set arrow 4 from 291,0,301 to 379,0,301 ls 1 lw 5 front 
+set view 59,58
+splot 'ReachTestPartialY.txt' using 1:2:3:2 w points palette
+pause -1 "Enter drücken um fortzufahren"

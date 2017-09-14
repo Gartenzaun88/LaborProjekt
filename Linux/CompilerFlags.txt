@@ -22,5 +22,8 @@ gcc -o MoveRandom.out Main.c -Llib -lRm101Control -Wall -Wextra -pedantic
 //MoveXYZ bauen
 gcc -o MoveXYZ.out MoveXYZ.c -Llib -lRm101Control -lRm101Kinematics -lm -Wall -Wextra -pedantic
 
+//PickUpObject bauen
+gcc -o PickUpObject.out PickUpObject.c -Llib -lRm101Control -lRm101Kinematics -lm -Wall -Wextra -pedantic
+
 //Gnuplots anzeigen
 gnuplot GnuPlotFull.gplt oder gnuplot GnuPlot.gplt
