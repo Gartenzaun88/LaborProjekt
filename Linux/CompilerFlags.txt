@@ -13,10 +13,14 @@ gcc -c Rm101Kinematics.c -lm -Wall -Wextra -pedantic -DDEBUG
 ar rs Debug/libRm101Kinematics.a Rm101Kinematics.o
 
 
-//reachtest bauen
-gcc -o Reachtest.out Main.c -Llib -lRm101Kinematics -lm -lRm101Control -Wall -Wextra -pedantic
-//Controlltest bauen
-gcc -o Controlltest.out Main.c -Llib -lRm101Control -Wall -Wextra -pedantic
+//CalculateReach bauen
+gcc -o Reachtest.out CalculateReach.c -Llib -lRm101Kinematics -lm -lRm101Control -Wall -Wextra -pedantic
+
+//MoveRandom bauen
+gcc -o MoveRandom.out Main.c -Llib -lRm101Control -Wall -Wextra -pedantic
+
+//MoveXYZ bauen
+gcc -o MoveXYZ.out MoveXYZ.c -Llib -lRm101Control -lRm101Kinematics -lm -Wall -Wextra -pedantic
 
 //Gnuplots anzeigen
 gnuplot GnuPlotFull.gplt oder gnuplot GnuPlot.gplt

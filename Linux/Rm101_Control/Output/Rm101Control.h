@@ -80,7 +80,7 @@ double_t Steps2Degree (int16_t aSteps,e_Joint aJoint);
  *  @param[in] aElbow Steps, um welche das Ellbogengelenk rotiert werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aWristpitch Steps, um welche das Handgelenk geneigt werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aWristRoll Steps, um welche das Handgelenk rotiert werden soll
- *  @return True, wenn der Roboter die Bewegung ausführt
+ *  @return True, wenn der Roboter die angegebene Position anfährt
  */
 Bool MoveRoboterSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t aWristPitch,int16_t aWristRoll);
 
@@ -91,7 +91,7 @@ Bool MoveRoboterSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow, int16_t
  *  @param[in] aElbow Winkel, um den das Ellbogengelenk rotiert werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aWristpitch Winkel, um den das Handgelenk geneigt werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aWristRoll Winkel, um den das Handgelenk rotiert werden soll
- *  @return True, wenn der Roboter die Bewegung ausführt
+ *  @return True, wenn der Roboter die angegebene Position anfährt
  */
 Bool MoveRoboterDegree(double_t aWaist, double_t aShoulder, double_t aElbow, double_t aWristPitch, double_t aWristRoll);
 
@@ -102,7 +102,7 @@ Bool MoveRoboterDegree(double_t aWaist, double_t aShoulder, double_t aElbow, dou
  *  @param[in] aShoulder Winkel, um den das Schultergelenk rotiert werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aElbow Winkel, um den das Ellbogengelenk rotiert werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aWristRoll Winkel, um den das Handgelenk rotiert werden soll
- *  @return True, wenn der Roboter die Bewegung ausführt
+ *  @return True, wenn der Roboter die angegebene Position anfährt
  */
 Bool MoveRoboterAlignedDegree(double_t aWaist, double_t aShoulder, double_t aElbow, double_t aWristRoll);
 
@@ -113,7 +113,7 @@ Bool MoveRoboterAlignedDegree(double_t aWaist, double_t aShoulder, double_t aElb
  *  @param[in] aShoulder Steps, um welche das Schultergelenk rotiert werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aElbow Steps, um welche das Ellbogengelenk rotiert werden soll, Positiv: Gegen den Uhrzeigersinn
  *  @param[in] aWristRoll Steps, um welche das Handgelenk rotiert werden soll
- *  @return True, wenn der Roboter die Bewegung ausführt
+ *  @return True, wenn der Roboter die angegebene Position anfährt
  */
 Bool MoveRoboterAlignedSteps(int16_t aWaist, int16_t aShoulder, int16_t aElbow,int16_t aWristRoll);
 
