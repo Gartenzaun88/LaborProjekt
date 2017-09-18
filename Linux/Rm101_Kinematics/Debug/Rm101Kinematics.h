@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 #include <math.h>
-#include "Rm101Kinematics.h"
+#include "Rm101Control.h"
 
 /** Kontrolliert für eine gesammte übergeben Roboterposition ob diese von den Gelenken eingenommen werden kann
  *  @param[in] aRobotPosition Position die kontrolliert werden soll

@@ -5,24 +5,25 @@
 #include <math.h>
 #include "Rm101Control.h"
 
-/** Kontrolliet ob die übergebene RoboterPosition vom Roboter eingenommen werden kann
- *  @param[in] aRobotPosition Struct mit den Steps für jedes Gelenk 
- *  @return True, wenn die übergebene Position angenommen werden aknn
+/** Kontrolliert für eine gesammte übergeben Roboterposition ob diese von den Gelenken eingenommen werden kann
+ *  @param[in] aRobotPosition Position die kontrolliert werden soll
+ *  @return True, wenn der sich wie angegeben positionieren kann
  */
 Bool CheckRobotMovementAll(RobotPosition aRobotPosition);
 
-/** Versucht den Roboter so auszurichten, dass sein TCP an der [X,Y,Z] Koordinate ist
- *  @param[in] X,Y,Z Zielkoordinaten
- *  @param[in] aWristpitch Neigung, welcher der TCP relativ zur Horizontalen haben soll
- *  @param[in] aWristRoll Rotation, um welche der TCP gedreht sein soll
+/** Versucht den TCP des Roboters an eine gegene Koordinate zu fahren und setzt den Errorcode
+ *  Neigung des TCP im Verhältnis zur horizontalen, sowie dessen Rotation müssen ebenfalls übergeben werden
+ *  @param[in] X,Y,Z Koordinaten des anzufahrenden Punktes
+ *  @param[in] aWristPitch Neigung des TCP gegenüber der horizontalen, Positiv nach oben geneigt
+ *  @param[in] aWristRoll Rotation des TCP
  *  @return True, wenn der Roboter die angegebene Position anfährt
  */
 Bool MoveRoboterXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch, double_t aWristRoll);
 
-/** Kontrolliert, ob der TCP des Roboters die [X,Y,Z] Koordinate erreichen kann
- *  @param[in] X,Y,Z Zielkoordinaten
- *  @param[in] aWristpitch Neigung, welcher der TCP relativ zur Horizontalen haben soll
- *  @return True, wenn der Roboter die angegebene erreichen kann
+/** Prüft ob der Roboter eine bestimmte Koordinate mit der übergeben Neigung des TCP anfahren kann
+ *  @param[in] X,Y,Z Koordinaten des anzufahrenden Punktes
+ *  @param[in] aWristPitch Neigung des TCP gegenüber der horizontalen, Positiv nach oben geneigt
+ *  @return True, wenn der Roboter die angegebene Position anfahren kann
  */
 Bool ValidateXYZ(int16_t X, int16_t Y, int16_t Z, double_t aWristPitch);
 

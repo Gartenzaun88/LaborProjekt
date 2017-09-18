@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "Rm101Control.h"
 #include "Rm101Kinematics.h"
 
 int main (int argc, char *argv[]){
